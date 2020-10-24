@@ -1,0 +1,9 @@
+textarea {
+    min-height: 400px;
+}
+#emails-container {
+    border: 1px solid black;
+}
+#emails-container .email {
+    border: 1px solid green;
+}
