@@ -81,7 +81,7 @@ function load_mailbox(mailbox) {
   .catch(err=>console.log(err))
   
 };
-
+//******View Mail*********/
 document.addEventListener('click', event => {
   const element = event.target;
   if(element.className === 'email'){
@@ -94,7 +94,6 @@ document.addEventListener('click', event => {
       const emdet = document.createElement('div');
       emdet.className = 'email-detail';
       emdet.style.display = 'block';
-      console.log(`the email.read =  ${email['read']}`);
       // Create a paragraph tag for each field:
       const sender = document.createElement('p');
       const recipent = document.createElement('p');
@@ -107,17 +106,17 @@ document.addEventListener('click', event => {
       emdet.append(sender, recipent, sub, body);   
       document.querySelector('#email-details').appendChild(emdet);     
       document.querySelector('#email-details').style.display = 'block';
-      /*document.querySelector('#inbox').addEventListener('click', function(){
-        const element = document.querySelector('#email-details');
-        element.remove();*/
       
-      
-      //const sentby = document.createElement('p');
-      //console.log(email['sender']);
-      console.log(`this is the ${emdet}`);
    
     })
   };
+    fetch(`emails/${element.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        read: true
+      })
+
+    })
 });
 
 
