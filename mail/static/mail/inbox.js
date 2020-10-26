@@ -45,6 +45,9 @@ function load_mailbox(mailbox) {
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#email-details').innerHTML = "";
+  document.querySelector('#email-details').style.display = 'none';
+  
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
@@ -66,6 +69,9 @@ function load_mailbox(mailbox) {
       subject.innerHTML = emails[i].subject;
       email.append(subject);
       email.append(sender);
+      if(emails[i].read === true){
+        email.style.background = 'gray';
+      }
       
       container.append(email)
     
@@ -79,14 +85,16 @@ function load_mailbox(mailbox) {
 document.addEventListener('click', event => {
   const element = event.target;
   if(element.className === 'email'){
-    
+    document.querySelector('#emails-view').style.display = 'none';
+
     fetch(`emails/${element.id}`)
     .then(response => response.json())
     .then(email => {
-      console.log(email);
+      
       const emdet = document.createElement('div');
       emdet.className = 'email-detail';
       emdet.style.display = 'block';
+      console.log(`the email.read =  ${email['read']}`);
       // Create a paragraph tag for each field:
       const sender = document.createElement('p');
       const recipent = document.createElement('p');
@@ -97,13 +105,15 @@ document.addEventListener('click', event => {
       sub.innerHTML = `<b>subject</b>: ${email['subject']}`;
       body.innerHTML = `<b>body</b>: ${email['body']}`;
       emdet.append(sender, recipent, sub, body);   
-      document.querySelector('.container').append(emdet);    
-      document.querySelector('#emails-view').style.display = 'none';
+      document.querySelector('#email-details').appendChild(emdet);     
+      document.querySelector('#email-details').style.display = 'block';
+      /*document.querySelector('#inbox').addEventListener('click', function(){
+        const element = document.querySelector('#email-details');
+        element.remove();*/
       
-
-      emdet.style.display = 'block';
+      
       //const sentby = document.createElement('p');
-      console.log(email['sender']);
+      //console.log(email['sender']);
       console.log(`this is the ${emdet}`);
    
     })
