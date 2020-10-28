@@ -69,6 +69,21 @@ function load_mailbox(mailbox) {
       subject.innerHTML = emails[i].subject;
       email.append(subject);
       email.append(sender);
+      const button = document.createElement('button');
+      button.id = 'archive';
+      button.innerHTML = 'Archive';
+      button.style.float = 'right';
+      button.onclick = function(){
+        fetch(`emails/${emails[i].id}`,{
+          method: 'PUT',
+          body: JSON.stringify({
+            archived: true
+          })
+        })
+      }
+      
+      email.append(button);
+
       if(emails[i].read === true){
         email.style.background = 'gray';
       }
