@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // By default, load the inbox
   load_mailbox('inbox', inbox);
-  document.querySelector('#compose-form').onsubmit = load_mailbox('sent');
+  //document.querySelector('#compose-form').onsubmit = load_mailbox('sent');
 
   
 });
@@ -77,10 +77,16 @@ function load_mailbox(mailbox) {
       email.id = emails[i].id;
       const sender = document.createElement('h3');
       const subject = document.createElement('p');
-      sender.innerHTML = emails[i].sender ;
+      const time = document.createElement('p');
+      time.style.float = 'right';
+      time.style.color = 'white';
+
+      sender.innerHTML = `<b> ${emails[i].sender} </b>` ;
       subject.innerHTML = emails[i].subject;
+      time.innerHTML = emails[i].timestamp;
       email.append(subject);
       email.append(sender);
+      email.append(time);
       const button = document.createElement('button');
       button.id = 'archive';
       button.style.float = 'right';
